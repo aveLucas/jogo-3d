@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class ThirdPersonCamera : MonoBehaviour
 {
-    public Transform target;  // O jogador
-    public float distance = 3f;  // Distância da câmera
-    public float sensitivity = 2f;  // Sensibilidade do mouse
-    public float minY = -40f, maxY = 80f;  // Limites de rotação vertical
+    public Transform target;  
+    public float distance = 3f;  
+    public float sensitivity = 2f;  
+    public float minY = -40f, maxY = 80f; 
 
     private float rotX = 0f, rotY = 0f;
 
     void Start()
     {
 
-        Cursor.lockState = CursorLockMode.Locked; // Trava o cursor no centro da tela
+        Cursor.lockState = CursorLockMode.Locked; 
         
     }
 
@@ -30,17 +30,32 @@ public class ThirdPersonCamera : MonoBehaviour
     {
         if(GameManager.isPaused != true)
         {
-            // Calcula rotação da câmera
-            Quaternion rotation = Quaternion.Euler(rotX, rotY, 0);
-            Vector3 position = target.position - (rotation * Vector3.forward * distance);
-
-            // Aplica posição e rotação da câmera
-            transform.position = position;
-            transform.LookAt(target.position);
-
-            // 🔥 Aqui garantimos que o jogador sempre olhe para frente quando na terceira pessoa
-            target.rotation = Quaternion.Euler(0, rotY, 0);
+            CalculateRotation();
         }
         
     }
+    private void CalculateRotation()
+    {
+        // Calcula rotação da câmera
+        Quaternion rotation = Quaternion.Euler(rotX, rotY, 0);
+        Vector3 position = target.position - (rotation * Vector3.forward * distance);
+
+        transform.position = position;
+        // Faz a câmera olhar horizontalmente para o alvo, sem inclinar
+        Vector3 lookTarget = target.position + Vector3.up * 1.5f; // Ajuste a altura se necessário
+        transform.LookAt(lookTarget);
+
+        target.rotation = Quaternion.Euler(0, rotY, 0);
+    }
+
+    public void SetRotation(Vector3 eulerAngles)
+    {
+        rotY = eulerAngles.y;
+        rotX = Mathf.Clamp(eulerAngles.x, minY, maxY); // Proteção, mesmo que geralmente só o Y seja útil
+    }
+    public Vector3 GetRotation()
+    {
+        return new Vector3(rotX, rotY, 0f);
+    }
+
 }

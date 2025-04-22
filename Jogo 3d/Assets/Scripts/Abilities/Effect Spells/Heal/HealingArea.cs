@@ -9,6 +9,7 @@ public class HealingArea : MonoBehaviour
     public PlayerStatus player;
     public GameObject spellPrefab;
     [SerializeField] private Transform castPosition;
+    [SerializeField] private Vector3 offSet;
     public float healingValue = 5f;
     public float manaCost;
     
@@ -23,12 +24,12 @@ public class HealingArea : MonoBehaviour
             player.manaBar.UpdateStatus(player.currentMana);
             
             castPosition = player.transform;
-            GameObject spell = Instantiate(spellPrefab, castPosition.position, castPosition.rotation);
+            GameObject spell = Instantiate(spellPrefab, castPosition.position + offSet, castPosition.rotation);
         }
         
     }
 
-    private void OnTriggerStay2D(Collider2D other)
+    private void OnTriggerStay(Collider other)
     {
         StartCoroutine(Heal());
     }

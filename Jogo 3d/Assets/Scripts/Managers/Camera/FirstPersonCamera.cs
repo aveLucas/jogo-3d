@@ -14,8 +14,6 @@ public class FirstPersonCamera : MonoBehaviour
         
         Cursor.lockState = CursorLockMode.Locked; // Trava o cursor no centro da tela
         
-        
-       
     }
 
     // Update is called once per frame
@@ -35,5 +33,10 @@ public class FirstPersonCamera : MonoBehaviour
         // Rotaciona o corpo do jogador no eixo Y
         playerBody.Rotate(Vector3.up * mouseX);
     }
-    
+    public void SetRotation(Vector3 eulerAngles)
+    {
+        xRotation = Mathf.Clamp(eulerAngles.x, -90f, 90f);
+        transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+    }
+
 }

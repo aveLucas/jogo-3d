@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Fireball : MonoBehaviour
@@ -69,8 +70,12 @@ public class Fireball : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log($"Colidiu com: {other.gameObject.name}");
-        DealDamage(other.gameObject);
-        Destroy(gameObject);
+        if (other.gameObject.tag != "Player")
+        {
+            Debug.Log($"Colidiu com: {other.gameObject.name}");
+            DealDamage(other.gameObject);
+            Destroy(gameObject);
+        }
+  
     }
 }

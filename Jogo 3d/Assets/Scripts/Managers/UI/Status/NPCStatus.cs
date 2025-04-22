@@ -8,8 +8,8 @@ public class NPCStatus : MonoBehaviour
 {
     //private Dissolve dissolve;
     //private DamageFlash damageFlash;
-    private SpriteRenderer spriteRenderer;
-    [SerializeField] private Material[] materials;
+    //private SpriteRenderer spriteRenderer;
+    //[SerializeField] private Material[] materials;
 
     public static bool isAlive;
 
@@ -19,10 +19,9 @@ public class NPCStatus : MonoBehaviour
     private float maxHealth = 100f;
     private float currentHealth;
 
-    // Start is called before the first frame update
     void Start()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        //spriteRenderer = GetComponent<SpriteRenderer>();
         //dissolve = GetComponent<Dissolve>();
         //damageFlash = GetComponent<DamageFlash>();
 
@@ -36,14 +35,9 @@ public class NPCStatus : MonoBehaviour
         isAlive = true;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     public void TakeDamage(float damageAmount)
     {
-        spriteRenderer.material = materials[1];
+        //spriteRenderer.material = materials[1];
 
         //damageFlash.CallDamageFlash();
 
@@ -54,7 +48,7 @@ public class NPCStatus : MonoBehaviour
         if (currentHealth <= 0)
         {
             isAlive = false;
-            spriteRenderer.material = materials[2];
+            //spriteRenderer.material = materials[2];
             Destroy(healthBar.gameObject);
             //dissolve.CallDissolve();
             

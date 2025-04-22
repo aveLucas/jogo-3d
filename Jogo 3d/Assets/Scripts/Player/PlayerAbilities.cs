@@ -19,9 +19,9 @@ public class PlayerAbilities : MonoBehaviour
         
     }
 
-    
 
-void castFireBall()
+
+    void castFireBall()
     {
         if (Input.GetKeyDown(KeyCode.Q))
         {
@@ -42,4 +42,6 @@ void castFireBall()
             hollow.Fire();
         }
     }
+
+
 }

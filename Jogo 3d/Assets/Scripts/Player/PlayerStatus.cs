@@ -46,6 +46,7 @@ public class PlayerStatus : MonoBehaviour
     {
         IsAliveVerification();
         TestDmg();
+        RestoreMana();
 
     }
     void IsAliveVerification()
@@ -82,5 +83,27 @@ public class PlayerStatus : MonoBehaviour
             }
 
     }
+    void RestoreMana()
+    {
+        if(Input.GetKeyDown(KeyCode.T))
+        {
+            StartCoroutine(FillManaBar());
+        }
+    }
+    IEnumerator FillManaBar()
+    {
+        float seconds = 1f;
+        float fillValue = 10f;
+        while (currentMana < maxMana)
+        {
 
+            currentMana = Mathf.Min(currentMana + fillValue, maxMana);
+            manaBar.UpdateStatus(currentMana);
+
+            yield return new WaitForSeconds(seconds);
+
+            Debug.Log($"heal: {fillValue}");
+        }
+
+    }
 }

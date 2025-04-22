@@ -9,13 +9,18 @@ public class PlayerMovement : MonoBehaviour
     public float gravity = -9.81f;
     Vector3 velocity;
     private bool isGrounded;
+    public bool Walking;
 
     CharacterController characterController;
     Transform firePoint;
 
+    //Referencias
+    PlayerAnimationState animationState;
+
     void Start()
     {
         characterController = GetComponent<CharacterController>();
+        animationState = GetComponent<PlayerAnimationState>();
     }
 
     // Update is called once per frame
@@ -32,6 +37,15 @@ public class PlayerMovement : MonoBehaviour
         {
             velocity.y = -2f; // Reseta a gravidade quando no chão
         }
+
+        if (Walking)
+        {
+            animationState.WalkAnimation();
+        }
+        else
+        {
+            animationState.IdleAnimation();
+        }
     }
 
     void Move()
@@ -42,6 +56,8 @@ public class PlayerMovement : MonoBehaviour
 
         Vector3 move = transform.right * moveX + transform.forward * moveZ;
         characterController.Move(move * speed * Time.deltaTime);
+        Walking = move != Vector3.zero;
+
     }
 
     void Jump()
